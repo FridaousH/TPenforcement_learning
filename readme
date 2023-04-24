@@ -1,0 +1,74 @@
+KAROUZO ESSOHANAM 
+ESSOU Didier
+ADAM Wadoud
+
+******************************Programme de renforecement learning cas BlackJack******************
+
+Architecture du projet
+Gymnasium/atari/blackjack version 1 Se rendre sur le site officiel de gymnasium pour l'avoir
+
+BlackJack est un jeu de carte.
+
+Voici les règles de base du Blackjack :
+
+1. Le jeu se joue avec un ou plusieurs jeux de cartes standard.
+
+2. Chaque joueur reçoit deux cartes et le croupier reçoit également deux cartes, dont une face cachée.
+
+3. La valeur de chaque carte est déterminée par son rang. Les as peuvent valoir 1 ou 11, les cartes de face (rois, dames et valets) valent 10, et toutes les autres cartes valent leur valeur de face.
+
+4. Les joueurs ont la possibilité de "toucher" et de prendre des cartes supplémentaires pour améliorer leur main, ou de "rester" et de conserver leur main actuelle.
+
+5. Le croupier doit tirer jusqu'à ce que sa main ait une valeur de 17 ou plus.
+
+6. Si la main d'un joueur dépasse 21, il perd la partie.
+
+6. Si la main du croupier dépasse 21, le joueur gagne la partie.
+
+7. Si ni le joueur ni le croupier n'ont perdu, la main dont la valeur totale est la plus élevée et qui est inférieure ou égale à 21 remporte la partie.
+
+Les actions possibles dans l'environnement
+- Espace d'action
+La forme d'action est (1,) dans l'intervalle {0, 1} indiquant s'il faut rester ou toucher.
+0 : rester
+1 : prend (toucher)
+
+- Espace d'observation
+L'observation consiste en un triplet contenant : la somme actuelle du joueur, la valeur de la seule carte visible du croupier (1-10 où 1 est l'as), et si le joueur détient un as utilisable (0 ou 1).
+
+-État de départ
+L'état de départ est initialisé dans l'intervalle suivant.
+Observation
+le joueur min 4 et max 12 ; croupier min 2 et max 11 et l'as utilisable est min 0 et max 1
+
+- Récompenses
+gagner la partie : +1
+partie perdue : -1
+match nul : 0
+
+- Fin de l'épisode
+L'épisode se termine si l'une des situations suivantes se produit :
+Fin :
+Le joueur touche et la somme des mains dépasse 21.
+Le joueur s'arrête.
+Un as sera toujours compté comme utilisable (11) à moins qu'il n'écrase le joueur.
+
+
+*****************Explication des paramètres de l'environnement après une action*****************************
+Exécution d'une action
+Après avoir reçu notre première observation, nous allons uniquement utiliser la fonction env.step(action) pour interagir avec l'environnement. Cette fonction prend une action en entrée et l'exécute dans l'environnement. Comme cette action modifie l'état de l'environnement, elle nous renvoie quatre variables utiles. Ces variables sont les suivantes
+
+- next_state : Il s'agit de l'observation que l'agent recevra après avoir effectué l'action.
+
+
+- reward : Il s'agit de la récompense que l'agent recevra après avoir effectué l'action.
+
+
+- terminated (terminé) : Variable booléenne indiquant si l'environnement s'est terminé ou non :
+
+
+- truncated : Variable booléenne indiquant si l'environnement s'est terminé ou non : Il s'agit d'une variable booléenne qui indique également si l'épisode s'est terminé par une troncature prématurée, c'est-à-dire qu'une limite de temps a été atteinte.. :
+
+
+- info : Il s'agit d'un dictionnaire qui peut contenir des informations supplémentaires sur l'environnement.
+Les variables next_state, reward, terminated et truncated sont explicites, mais la variable info nécessite quelques explications supplémentaires. Cette variable contient un dictionnaire qui peut contenir des informations supplémentaires sur l'environnement, mais dans l'environnement Blackjack-v1, vous pouvez l'ignorer. Par exemple, dans les environnements Atari, le dictionnaire info 
